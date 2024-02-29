@@ -1,3 +1,21 @@
+## StereoKit ARCore Template
+
+This is our ARCore extension for StereoKit that shows 4 demo scenes:
+1. One showing basic native Android UI interaction and functionality (some examples to get you started).
+2. One showing the basic SK setup that StereoKitTest_NetAndroid was showing, but without letting it absorb the entire screen like it does for the Quest and MagicLeap (which makes sense for those but not so much for phones).
+3. One showing an SK scene + some interactive Android UI and the ability to drag a scene around the SK scene with touch.
+4. One showing an SK scene + ARCore background texture + the SK camera moves appropriately with the ARCore camera pose, allowing for full basic AR functionality. Extra features like depth-based culling can be added easily by following along the HelloAR and other Google code.
+
+The overall methodology for getting ARCore working involves stumbling through the Xamarin.ARCore samples, HelloAR example, and Android API. The code is heavily commented to hopefully save new Android devs a lot of time debugging and scouring StackOverflow for what should be basic information.
+
+## StereoKit ARCore Video Demo
+
+[![StereoKit ARCore video demo](https://img.youtube.com/vi/yKjHNEzbiy0/0.jpg)](https://www.youtube.com/watch?v=yKjHNEzbiy0)
+
+
+
+
+
 <p align="center"><img src="/tools/img/StereoKitWideBackground.svg" alt="StereoKit Logo" height="160"></p>
 <p align="center">
     <a href="https://github.com/StereoKit/StereoKit/branches"><img src="https://img.shields.io/github/last-commit/StereoKit/StereoKit/develop" /></a>

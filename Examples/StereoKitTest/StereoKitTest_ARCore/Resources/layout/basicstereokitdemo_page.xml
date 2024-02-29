@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical" >
+
+    <Button     android:id="@+id/gobackbutton"
+                android:tag="@+string/gobackbutton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Go back" 
+    />
+
+    <TextView   android:layout_width="match_parent" 
+                android:layout_height="wrap_content" 
+                android:text="Basic StereoKit ARCore Demo" 
+    />
+
+
+    <SurfaceView    android:id="@+id/surfaceview"
+                    android:tag="@+string/surfaceview"
+                    android:layout_width="match_parent"
+                    android:layout_height="fill_parent"
+                    android:background="@android:color/transparent"
+                    android:backgroundTint="@android:color/transparent"
+    />
+
+</LinearLayout>

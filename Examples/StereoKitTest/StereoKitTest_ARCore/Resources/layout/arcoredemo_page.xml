@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical" 
+>
+
+    <LinearLayout   android:id="@+id/linearLayout2"
+                    android:tag="@+string/linearLayout2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_gravity="center_horizontal"
+    >
+
+        <Button     android:id="@+id/gobackbutton"
+                    android:tag="@+string/gobackbutton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:elevation="200dp"
+                    android:text="Go back" 
+        />
+
+        <TextView   android:layout_width="fill_parent" 
+                    android:layout_height="wrap_content" 
+                    android:text="StereoKit ARCore Demo (drag to move a sphere around)" 
+        />
+
+    </LinearLayout>
+
+    <RelativeLayout     android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+    >
+
+
+        <!--NOTE: 16:9 cam resolution. Ideally set in the arcore initialization, which it does-->
+        <!--NOTE: Elevation is basically z value. use it to make sk view behind android buttons (use relative layout)-->
+        <SurfaceView    android:id="@+id/surfaceview"
+                        android:tag="@+string/surfaceview"
+                        android:layout_width="200dp"
+                        android:layout_height="356dp" 
+                        android:layout_gravity="bottom" 
+                        android:elevation="-100dp"
+                        android:background="@android:color/transparent"
+                        android:backgroundTint="@android:color/transparent"
+        />
+
+	    <TextView   android:id="@+id/debugtext"
+                    android:tag="@+string/debugtext"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Hello, I am a TextView" 
+                    android:elevation="200dp"
+                    android:textColor="@android:color/holo_red_light"
+        />
+
+        <RelativeLayout     android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:elevation="200dp"
+                            android:layout_below="@+id/debugtext"
+        >
+
+	        <Button     android:id="@+id/button1"
+                        android:tag="@+string/button1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:elevation="-200dp"
+                        android:text="Make red bigger" 
+                        android:layout_toRightOf="@+id/gobackbutton"
+            />
+
+            <Button     android:id="@+id/button2"
+                        android:tag="@+string/button2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Make yellow bigger" 
+                        android:layout_toRightOf="@+id/button1"
+            />
+
+            <Button     android:id="@+id/nextactivitybutton"
+                        android:tag="@+string/nextactivitybutton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Next Activity (breaks it)" 
+                        android:layout_toRightOf="@+id/button2"
+            />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>

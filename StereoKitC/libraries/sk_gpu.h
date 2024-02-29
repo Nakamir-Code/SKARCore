@@ -80,6 +80,10 @@ sk_gpu.h
 #include <stdint.h>
 #include <stdbool.h>
 #include <stddef.h>
+#include <string>
+#if defined(__ANDROID__)
+#include <syslog.h>
+#endif
 
 ///////////////////////////////////////////
 
@@ -5606,25 +5610,135 @@ bool skg_shader_file_load_memory(const void *data, size_t size, skg_shader_file_
 
 ///////////////////////////////////////////
 
-skg_shader_stage_t skg_shader_file_create_stage(const skg_shader_file_t *file, skg_stage_ stage) {
+skg_shader_stage_t skg_shader_file_create_stage(const skg_shader_file_t* file, skg_stage_ stage) {
 	skg_shader_lang_ language;
 #if defined(SKG_DIRECT3D11) || defined(SKG_DIRECT3D12)
 	language = skg_shader_lang_hlsl;
 #elif defined(SKG_OPENGL)
-	#if   defined(_SKG_GL_WEB)
-		language = skg_shader_lang_glsl_web;
-	#elif defined(_SKG_GL_ES)
-		language = skg_shader_lang_glsl_es;
-	#elif defined(_SKG_GL_DESKTOP)
-		language = skg_shader_lang_glsl;
-	#endif
+#if   defined(_SKG_GL_WEB)
+	language = skg_shader_lang_glsl_web;
+#elif defined(_SKG_GL_ES)
+	language = skg_shader_lang_glsl_es;
+#elif defined(_SKG_GL_DESKTOP)
+	language = skg_shader_lang_glsl;
+#endif
 #elif defined(SKG_VULKAN)
 	language = skg_shader_lang_spirv;
 #endif
 
 	for (uint32_t i = 0; i < file->stage_count; i++) {
-		if (file->stages[i].language == language && file->stages[i].stage == stage)
-			return skg_shader_stage_create(file->stages[i].code, file->stages[i].code_size, stage);
+		if (file->stages[i].language == language && file->stages[i].stage == stage) {
+
+
+			//------------------------------------------------------------------------sk unlit, but with oes texture------------------------------------------------------------------------
+			const char* skARCoreVertexShader = R"_(#version 320 es
+
+
+struct inst_t
+{
+    mat4 world;
+    vec4 color;
+};
+
+layout(binding = 1, std140) uniform stereokit_buffer
+{
+    layout(row_major) mat4 sk_view[2];
+    layout(row_major) mat4 sk_proj[2];
+    layout(row_major) mat4 sk_proj_inv[2];
+    layout(row_major) mat4 sk_viewproj[2];
+    vec4 sk_lighting_sh[9];
+    vec4 sk_camera_pos[2];
+    vec4 sk_camera_dir[2];
+    vec4 sk_fingertip[2];
+    vec4 sk_cubemap_i;
+    float sk_time;
+    uint sk_view_count;
+} sk_buffer;
+
+layout(binding = 2, std140) uniform transform_buffer
+{
+    layout(row_major) inst_t sk_inst[819];
+} tf_buffer;
+
+layout(binding = 0, std140) uniform _Global
+{
+    vec4 color;
+    float tex_scale;
+} current_texture;
+
+layout(location = 0) in vec4 input_pos;
+layout(location = 2) in vec2 input_uv;
+layout(location = 3) in vec4 input_col;
+
+layout(location = 0) out vec2 fs_uv;
+
+
+void main()
+{
+	vec4 modified_input_pos=input_pos;
+
+	modified_input_pos.y=-10.0; //idk why i did this or why it works. think it was because of y actually being depth and not z, also to make the depth uniform
+
+    gl_Position = sk_buffer.sk_viewproj[0] * vec4((tf_buffer.sk_inst[0].world * vec4(modified_input_pos.xyz, 1.0)).xyz, 1.0); //seems like coordinate system because correct (GL) after this
+	
+	gl_Position.z=(gl_Position.z/gl_Position.w); //w will get reset so need to normalize this beforehand
+
+	//rotate it around by modifying point positions. rotated everything 90 degrees clockwise
+	if (modified_input_pos.z/modified_input_pos.w>0.0 && modified_input_pos.x/modified_input_pos.w>0.0){ //bottom right
+		gl_Position.x=-1.0;
+		gl_Position.y=-1.0;
+	} else if (modified_input_pos.z/modified_input_pos.w>0.0 && modified_input_pos.x/modified_input_pos.w<0.0){ //bottom left
+		gl_Position.x=-1.0;
+		gl_Position.y=1.0;
+	} else if (modified_input_pos.z/modified_input_pos.w<0.0 && modified_input_pos.x/modified_input_pos.w>0.0){ //top right
+		gl_Position.x=1.0;
+		gl_Position.y=-1.0;
+	} else if (modified_input_pos.z/modified_input_pos.w<0.0 && modified_input_pos.x/modified_input_pos.w<0.0){ //top left
+		gl_Position.x=1.0;
+		gl_Position.y=1.0;
+	}
+
+	gl_Position.w=1.0; //stops it from normalizing the xs and ys given. probably some way to hardcode what z should be but messing with it breaks it too easily
+	
+	fs_uv = input_uv * current_texture.tex_scale;
+})_";
+
+
+			const char* skARCoreFragmentShader = R"_(#version 320 es
+#extension GL_OES_EGL_image_external_essl3 : require
+
+precision highp int;
+
+layout(location = 0) in highp vec2 fs_uv;
+uniform samplerExternalOES sTexture;
+
+layout(location = 0) out highp vec4 _entryPointOutput;
+
+void main()
+{
+	_entryPointOutput = texture(sTexture, fs_uv);
+	//https://github.com/google-ar/arcore-unity-sdk/issues/268
+	_entryPointOutput.rgb = pow(_entryPointOutput.rgb, vec3(2.2));
+})_";
+
+
+			char* arShaderName = "sk/ar_background";
+			bool isARShader = strcmp(file->meta->name, arShaderName) == 0;
+
+			if (isARShader) 
+			{
+				if (stage == skg_stage_pixel) {
+					return skg_shader_stage_create(skARCoreFragmentShader, strlen(skARCoreFragmentShader), stage);
+				}
+				else if (stage==skg_stage_vertex) {
+					return skg_shader_stage_create(skARCoreVertexShader, strlen(skARCoreVertexShader), stage);
+				}
+			}
+			else
+			{
+				return skg_shader_stage_create(file->stages[i].code, file->stages[i].code_size, stage);
+			}
+		}
 	}
 	skg_shader_stage_t empty = {};
 	return empty;

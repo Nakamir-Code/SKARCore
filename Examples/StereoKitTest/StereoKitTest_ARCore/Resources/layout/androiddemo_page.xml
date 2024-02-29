@@ -1,0 +1,216 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout   xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/rootlayout"
+                android:tag="@+string/rootlayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical" 
+>
+    <!--NOTE: the id seems to be usable by the XML itself, and the tag is what we use to find them in c#. you can probably find by id as well like in Xamarin but it doesn't seem as easy without it--> 
+
+    <!--NOTE: example of centering-->
+    <LinearLayout   android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+    >
+
+        <ImageView  android:id="@+id/sklogoview"
+                    android:tag="@+string/sklogoview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="StereoKit logo"
+        />
+
+        <!--NOTE: dp is a density-independent pixel.... use this so that things are roughly the same relative size between devices -->
+        <TextView   android:id="@+id/titletextview"
+                    android:tag="@+string/titletextview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Basic Android Demo" 
+                    android:textSize="30dp"
+                    android:elevation="200dp"
+                    android:textColor="@android:color/black"
+                    android:layout_gravity="center"
+        />
+
+    </LinearLayout>
+
+    <TextView   android:id="@+id/textview1"
+                android:tag="@+string/textview1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="This demo shows basic Android UI usage." 
+                android:elevation="200dp"
+                android:textColor="@android:color/black"
+    />
+
+    <TextView   android:id="@+id/textview2"
+                android:tag="@+string/textview2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="This is a red TextView." 
+                android:elevation="200dp"
+                android:textColor="@android:color/holo_red_dark"
+    />
+
+    <Button     android:id="@+id/gobackbutton"
+                android:tag="@+string/gobackbutton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Go back" 
+    />
+
+    <RelativeLayout     android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+    >
+
+        <TextView   android:id="@+id/hitextview"
+                    android:tag="@+string/hitextview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Hi" 
+                    android:elevation="200dp"
+                    android:textColor="@android:color/black"
+        />
+
+        <CheckBox   android:id="@+id/checkbox1"
+                    android:tag="@+string/checkbox1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/hitextview"
+        />
+
+        <CheckBox   android:id="@+id/checkbox2"
+                    android:tag="@+string/checkbox2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/checkbox1"
+        />
+
+        <CheckBox   android:id="@+id/checkbox3"
+                    android:tag="@+string/checkbox3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/checkbox2"
+        />
+
+        <CheckBox   android:id="@+id/checkbox4"
+                    android:tag="@+string/checkbox4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/checkbox3"
+        />
+
+    </RelativeLayout>
+
+    <TextView   android:id="@+id/checkboxstatus"
+                android:tag="@+string/checkboxstatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="checkbox status: " 
+                android:elevation="200dp"
+                android:textColor="@android:color/black"
+    />
+
+    <RelativeLayout     android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+    >
+        <NumberPicker   android:id="@+id/picker1"
+                        android:tag="@+string/picker1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+        />
+
+        <NumberPicker   android:id="@+id/picker2"
+                        android:tag="@+string/picker2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/picker1"
+        />
+
+        <NumberPicker   android:id="@+id/picker3"
+                        android:tag="@+string/picker3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/picker2"
+        />
+
+        <NumberPicker   android:id="@+id/picker4"
+                        android:tag="@+string/picker4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/picker3"
+        />
+
+    </RelativeLayout>
+
+    <TextView   android:id="@+id/pickerstatus"
+                android:tag="@+string/pickerstatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="picker status: " 
+                android:elevation="200dp"
+                android:textColor="@android:color/black"
+    />
+
+
+    <!--NOTE: This is an example of a RelativeLayout. Basically, there are 2 linear layouts (which are just stacks, easy to work with) which are organized side-by-side with a RelativeLayout (which has more customizability as far as placement, but if you don't explicitly say where things are, it will just overlap them at the top)-->
+    <!--be very careful of end carets, just like with html-->
+    <RelativeLayout android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+    >
+
+        <RelativeLayout android:id="@+id/leftbuttonlayout"
+                        android:tag="@+string/leftbuttonlayout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+        >
+
+            <LinearLayout   android:id="@+id/leftbuttonlayoutlist"
+                            android:tag="@+string/leftbuttonlayoutlist"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                <Button     android:id="@+id/button1"
+                            android:tag="@+string/button1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Button 1" 
+                />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <!--NOTE: notice the toRightOf parameter. You need this for relative layout elements to define where things are, otherwise it overlaps them (makes them colocated)-->
+        <RelativeLayout android:id="@+id/rightbuttonlayout"
+                        android:tag="@+string/rightbuttonlayout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/leftbuttonlayout"
+        >
+
+            <LinearLayout   android:id="@+id/rightbuttonlayoutlist"
+                            android:tag="@+string/rightbuttonlayoutlist"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+            >
+
+                <Button     android:id="@+id/button2"
+                            android:tag="@+string/button2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Button 2" 
+                />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>

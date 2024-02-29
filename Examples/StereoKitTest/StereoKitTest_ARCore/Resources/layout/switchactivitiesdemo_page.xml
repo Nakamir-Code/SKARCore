@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical" 
+>
+
+    <TextView   android:id="@+id/explanationtextview"
+                android:tag="@+string/explanationtextview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="This is an example of a new Activity. The previous one is still on the stack. Calling this.Finish() kills this one and goes back to the previous. New Activities is technically the right way to change pages, but handling the flow can be a bit more annoying than switching ContentPages, especially since a new Activity is like a different app entirely. However, switching ContentPages can make garbage collection a pain. People on forums argued that it makes things gross and disorganized but that doesn't seem to be true as long as you organize pages into classes like I did in the other example. The swapping pages way is very similar to MAUI, so it might be better than swapping activities if you came from MAUI or Xamarin. Even if you switch activities, it may still be neater to organize Pages into classes anyway instead of doing everything in the Activity." 
+                android:elevation="200dp"
+                android:textColor="@android:color/black"
+    />
+
+    <TextView   android:id="@+id/explanationtextview2"
+                android:tag="@+string/explanationtextview2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Note that returning WILL mess up the SK rendering bc Nick Klingensmith mentioned that SK is not quite ready to Quit() then restart in the same GL instance. This should only be the case if you go backwards through the Activity stack (to an existing Activity, which retains its GL instance even if you kill SK and the surface view." 
+                android:elevation="200dp"
+                android:textColor="@android:color/holo_red_light"
+    />
+
+    <Button     android:id="@+id/switchactivitiesbutton"
+                android:tag="@+string/switchactivitiesbutton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Go back to previous activity (also attempting to restart SK)." 
+    />
+
+</LinearLayout>

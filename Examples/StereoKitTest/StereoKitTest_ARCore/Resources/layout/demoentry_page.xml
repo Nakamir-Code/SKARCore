@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout   xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/rootlayout"
+                android:tag="@+string/rootlayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical" >
+    <!--the id seems to be usable by the XML itself, and the tag is what we use to find them in c#. you can probably find by id as well like in Xamarin but it doesn't seem as easy without it--> 
+
+    <!--example of centering-->
+    <LinearLayout   android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_gravity="center">
+
+        <ImageView  android:id="@+id/sklogoview"
+                    android:tag="@+string/sklogoview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="StereoKit logo"
+        />
+
+        <!--dp is a density-independent pixel.... use this so that things are roughly the same relative size between devices -->
+        <TextView   android:id="@+id/titletextview"
+                    android:tag="@+string/titletextview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="StereoKit ARCore Demo" 
+                    android:textSize="30dp"
+                    android:elevation="200dp"
+                    android:textColor="@android:color/black"
+                    android:layout_gravity="center"
+        />
+
+    </LinearLayout>
+
+    <TextView   android:id="@+id/textview1"
+                android:tag="@+string/textview1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="This is our StereoKit demo using only native Android as opposed to MAUI or Xamarin, as well as ARCore. We demonstrate some basic Android functionality as well so that maybe you can do some interesting things with SK as a sub-window. \n\n\n MAUI doesn't support OpenGL, which makes it incredibly difficult to implement ARCore, which requires an OpenGL context (so you could theoretically implement ARCore at the C level to work with MAUI, but that might be a huge pain for the frontend), and Xamarin will lose support in 2024." 
+                android:elevation="200dp"
+                android:textColor="@android:color/black"
+    />
+
+    <TextView   android:id="@+id/textview2"
+                android:tag="@+string/textview2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Our current solution for ARCore is a bit jank... it involves hardcoding a shader in very low-level SK libraries :(  But it does work for now :) \n\nAlso, SK is not yet ready to be restart after quitting so when you go back to a page with SK running, the rendering is clearly broken." 
+                android:elevation="200dp"
+                android:textColor="@android:color/holo_red_dark"
+    />
+
+    <!--NOTE: This is an example of a RelativeLayout. Basically, there are 3 buttons organized horizontally, with the layout_toRightOf property used to decide which one is where. can also accomplish with horizontal LinearLayout-->
+    <!--be very careful of end carets, just like with html-->
+    <RelativeLayout android:id="@+id/demobuttonslayout"
+                    android:tag="@+string/demobuttonslayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+        <Button     android:id="@+id/basicandroiddemobutton"
+                    android:tag="@+string/basicandroiddemobutton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Basic Android demo" 
+        />
+
+        <Button     android:id="@+id/basicskdemobutton"
+                    android:tag="@+string/basicskdemobutton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Basic StereoKit demo" 
+                    android:layout_toRightOf="@+id/basicandroiddemobutton"
+        />
+
+        <Button     android:id="@+id/interactiveskdemobutton"
+                    android:tag="@+string/interactiveskdemobutton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Interactive StereoKit demo" 
+                    android:layout_below="@+id/basicandroiddemobutton"
+        />
+
+        <Button     android:id="@+id/arcoredemobutton"
+                    android:tag="@+string/arcoredemobutton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ARCore demo" 
+                    android:layout_below="@+id/basicandroiddemobutton"
+                    android:layout_toRightOf="@+id/interactiveskdemobutton"
+        />
+    </RelativeLayout>
+
+</LinearLayout>

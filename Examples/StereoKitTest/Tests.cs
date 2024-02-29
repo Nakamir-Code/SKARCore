@@ -10,6 +10,7 @@ public static class Tests
 	static List<Type> allTests  = new List<Type>();
 	static List<Type> demoTests = new List<Type>();
 	static ITest activeScene;
+	public static ITest GetActiveScene() { return activeScene; }
 	static ITest nextScene;
 	static int   testIndex  = 0;
 	static int   runFrames  = 2;

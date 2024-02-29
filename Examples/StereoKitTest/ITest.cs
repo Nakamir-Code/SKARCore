@@ -1,4 +1,4 @@
-﻿interface ITest
+﻿public interface ITest
 {
 	void Initialize();
 	void Step();

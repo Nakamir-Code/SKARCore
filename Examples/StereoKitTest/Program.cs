@@ -10,12 +10,12 @@ using StereoKit.Framework;
 
 class Program
 {
-	static string startTest = "welcome";
+	static string startTest = "arcore";
 	static SKSettings settings = new SKSettings {
 		appName         = "StereoKit C#",
 		assetsFolder    = "Assets",
 		blendPreference = DisplayBlend.AnyTransparent,
-		mode            = AppMode.XR,
+		mode            = AppMode.Window,
 		logFilter       = LogLevel.Diagnostic,
 		//origin          = OriginMode.Floor,
 	};
@@ -102,7 +102,7 @@ class Program
 	static void Init()
 	{
 		Material floorMat = new Material(Shader.FromFile("Shaders/floor_shader.hlsl"));
-		floorMat.Transparency = Transparency.Blend;
+		floorMat.Transparency = Transparency.Add;
 		floorMat.SetVector("radius", new Vec4(5,10,0,0));
 		floorMat.QueueOffset = -11;
 
